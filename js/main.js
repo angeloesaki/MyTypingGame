@@ -68,6 +68,18 @@
 
     //秒単位で小数点以下を２桁まで表示
     timerLabel.textContent = (timeLeft / 1000).toFixed(2);
+
+    //カウントダウン処理
+    const timeoutId = setTimeout(() => {
+      updateTimer();
+    }, 10);
+
+    //制限時間が残り０秒になったらタイマーを止める処理
+    if (timeLeft < 0) {
+      //setTimeout()をキャンセルするにはclearTimeout()の引数にsetTimeout()の返り値を入れれば良いので、その返り値を定数で受け取り、clearTimeoutの引数に入れる
+      clearTimeout(timeoutId);
+      alert("Game Over");
+    }
   }
 
   target.addEventListener("click", () => {
