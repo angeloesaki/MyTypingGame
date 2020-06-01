@@ -1,7 +1,24 @@
 "use strict";
 {
+  //打つべき単語配列
+  const words = [
+    "apple",
+    "pizza",
+    "hamburger",
+    "banana",
+    "orange",
+    "dog",
+    "wine",
+    "pasta",
+    "egg",
+    "sausage",
+    "taco",
+    "potato",
+  ];
+
+  //配列wordsの中からランダムに選ぶ
   //↓は打つべき単語
-  const word = "apple";
+  let word = words[Math.floor(Math.random() * words.length)];
 
   //後で値を再代入していくのでletで宣言
   //↓は打つべき文字のインデックス
@@ -44,7 +61,17 @@
       //scoreを表示し、locの数字を１増やす
       // console.log("score");
       loc++;
+
+      //キーを打っていてlocを更新した後に、もしlocが今打つべき単語の文字数と同じになったら次の単語にいく
+      if (loc === word.length) {
+        //次の単語をセット
+        word = words[Math.floor(Math.random() * words.length)];
+        loc = 0;
+      }
+
+      //正解した文字の表示を変更する処理
       updateTarget();
+
       score++;
       scoreLabel.textContent = score;
     } else {
