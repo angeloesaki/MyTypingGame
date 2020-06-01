@@ -7,11 +7,12 @@ body {
 }
 
 #target {
-  font-size: 48px;
+  font-size: 80px;
   letter-spacing: 3px;
   cursor: pointer;
 }
 
 .info {
   color: #ccc;
+  font-size: 30px;
 }

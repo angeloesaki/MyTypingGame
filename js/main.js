@@ -14,24 +14,49 @@
     "sausage",
     "taco",
     "potato",
+    "chocolate",
+    "tomato",
+    "beef",
+    "pork",
+    "chicken",
+    "beer",
+    "burrito",
+    "watermelon",
+    "grape",
+    "cucumber",
+    "broccoli",
+    "rice",
+    "milk",
+    "honey",
+    "almond",
+    "donut",
   ];
 
   //配列wordsの中からランダムに選ぶ
   //↓は打つべき単語
-  let word = words[Math.floor(Math.random() * words.length)];
+  // let word = words[Math.floor(Math.random() * words.length)];
+  //ゲームが始まる時にどうせ呼ばれるから宣言だけにしておく
+  let word;
 
   //後で値を再代入していくのでletで宣言
   //↓は打つべき文字のインデックス
-  let loc = 0;
+  // let loc = 0;
+  //ゲームが始まる時にどうせ呼ばれるから宣言だけにしておく
+  let loc;
 
   //正解の数を管理するための変数
-  let score = 0;
+  // let score = 0;
+  //ゲームが始まる時にどうせ呼ばれるから宣言だけにしておく
+  let score;
+
   //不正解の数を管理するための変数
-  let miss = 0;
+  // let miss = 0;
+  //ゲームが始まる時にどうせ呼ばれるから宣言だけにしておく
+  let miss;
 
   //タイマー処理（制限時間を管理）
   //初期化
-  const timeLimit = 3 * 1000;
+  const timeLimit = 60 * 1000;
 
   //ゲーム開始時刻を保持するための変数
   let startTime;
@@ -43,6 +68,7 @@
   const scoreLabel = document.getElementById("score");
   const missLabel = document.getElementById("miss");
   const timerLabel = document.getElementById("timer");
+  const accuracyLabel = document.getElementById("accuracy");
 
   //targetにwordをセットする処理
   // target.textContent = word;
@@ -92,6 +118,9 @@
       setTimeout(() => {
         showResult();
       }, 100);
+
+      //リプレイ画面を表示
+      target.textContent = "Click here to replay.";
     }
   }
 
@@ -100,9 +129,12 @@
     //何か入力された場合は普通に計算
     //条件演算子を利用
     const accuracy = score + miss === 0 ? 0 : (score / (score + miss)) * 100;
+
     alert(
       `${score} letters, ${miss} misses, ${accuracy.toFixed(2)}% accuracy.`
     );
+
+    accuracyLabel.textContent = ` Accuracy: ${accuracy.toFixed(2)}%,`;
   }
 
   target.addEventListener("click", () => {
@@ -111,6 +143,15 @@
       return;
     }
     isPlaying = true;
+
+    //リプレイ用に数値を初期化
+    accuracyLabel.textContent = "";
+    loc = 0;
+    score = 0;
+    miss = 0;
+    scoreLabel.textContent = score;
+    missLabel.textContent = miss;
+    word = words[Math.floor(Math.random() * words.length)];
 
     target.textContent = word;
     startTime = Date.now();
