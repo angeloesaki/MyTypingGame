@@ -33,7 +33,8 @@
   const scoreLabel = document.getElementById("score");
   const missLabel = document.getElementById("miss");
 
-  target.textContent = word;
+  //targetにwordをセットする処理
+  // target.textContent = word;
 
   //正解した文字の表示を変更する処理
   function updateTarget() {
@@ -51,6 +52,10 @@
     //substring()の引数には表示したい文字列のスタート地点のインデックスを当てる
     target.textContent = placeholder + word.substring(loc);
   }
+
+  target.addEventListener("click", () => {
+    target.textContent = word;
+  });
 
   //e.keyでタイプしたキーを取得
   window.addEventListener("keydown", (e) => {

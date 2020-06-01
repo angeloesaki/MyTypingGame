@@ -3,11 +3,13 @@ body {
   /* 等幅フォント */
   font-family: "Courier New", Courier, monospace;
   text-align: center;
+  user-select: none;
 }
 
 #target {
   font-size: 48px;
   letter-spacing: 3px;
+  cursor: pointer;
 }
 
 .info {
