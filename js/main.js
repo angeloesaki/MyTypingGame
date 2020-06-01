@@ -36,6 +36,9 @@
   //ゲーム開始時刻を保持するための変数
   let startTime;
 
+  //ゲームがすでに始まっているかどうかを管理するための変数
+  let isPlaying = false;
+
   const target = document.getElementById("target");
   const scoreLabel = document.getElementById("score");
   const missLabel = document.getElementById("miss");
@@ -76,6 +79,8 @@
 
     //制限時間が残り０秒になったらタイマーを止める処理
     if (timeLeft < 0) {
+      isPlaying = false;
+
       //タイマーのalert()のokをクリックした後に数字が-になる不具合を修正
       timerLabel.textContent = "0.00";
 
@@ -85,12 +90,28 @@
       //タイマーが0.00になる前にalert()が発動され0.01などでタイマーが止まる不具合を修正
       //アラートの処理を遅らせる
       setTimeout(() => {
-        alert("Game Over");
+        showResult();
       }, 100);
     }
   }
 
+  function showResult() {
+    //何も入力されていない場合は正答率０％を表示
+    //何か入力された場合は普通に計算
+    //条件演算子を利用
+    const accuracy = score + miss === 0 ? 0 : (score / (score + miss)) * 100;
+    alert(
+      `${score} letters, ${miss} misses, ${accuracy.toFixed(2)}% accuracy.`
+    );
+  }
+
   target.addEventListener("click", () => {
+    //もしゲームがすでに始まっていたらカウントダウン処理を実行しない
+    if (isPlaying === true) {
+      return;
+    }
+    isPlaying = true;
+
     target.textContent = word;
     startTime = Date.now();
     updateTimer();
@@ -98,6 +119,11 @@
 
   //e.keyでタイプしたキーを取得
   window.addEventListener("keydown", (e) => {
+    //ゲームがまだ始まっていなかったら以下の処理を実行しない
+    if (isPlaying !== true) {
+      return;
+    }
+
     // console.log(e.key);
     //タイピングの正誤判定
     //もしタイプされた文字とwordのloc番目の文字が同じなら
