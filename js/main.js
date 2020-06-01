@@ -29,9 +29,17 @@
   //不正解の数を管理するための変数
   let miss = 0;
 
+  //タイマー処理（制限時間を管理）
+  //初期化
+  const timeLimit = 3 * 1000;
+
+  //ゲーム開始時刻を保持するための変数
+  let startTime;
+
   const target = document.getElementById("target");
   const scoreLabel = document.getElementById("score");
   const missLabel = document.getElementById("miss");
+  const timerLabel = document.getElementById("timer");
 
   //targetにwordをセットする処理
   // target.textContent = word;
@@ -53,8 +61,19 @@
     target.textContent = placeholder + word.substring(loc);
   }
 
+  //残り時間を計算
+  function updateTimer() {
+    //ゲームが始まった時刻に制限時間を足して、そこから現在の時刻を引けば算出できる
+    const timeLeft = startTime + timeLimit - Date.now();
+
+    //秒単位で小数点以下を２桁まで表示
+    timerLabel.textContent = (timeLeft / 1000).toFixed(2);
+  }
+
   target.addEventListener("click", () => {
     target.textContent = word;
+    startTime = Date.now();
+    updateTimer();
   });
 
   //e.keyでタイプしたキーを取得
