@@ -76,9 +76,17 @@
 
     //制限時間が残り０秒になったらタイマーを止める処理
     if (timeLeft < 0) {
+      //タイマーのalert()のokをクリックした後に数字が-になる不具合を修正
+      timerLabel.textContent = "0.00";
+
       //setTimeout()をキャンセルするにはclearTimeout()の引数にsetTimeout()の返り値を入れれば良いので、その返り値を定数で受け取り、clearTimeoutの引数に入れる
       clearTimeout(timeoutId);
-      alert("Game Over");
+
+      //タイマーが0.00になる前にalert()が発動され0.01などでタイマーが止まる不具合を修正
+      //アラートの処理を遅らせる
+      setTimeout(() => {
+        alert("Game Over");
+      }, 100);
     }
   }
 
